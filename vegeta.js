@@ -24,14 +24,24 @@ bot.on('ready', function (evt) {
 
 bot.on('message', function (user,userID, channelID, message, evt) {
   var input = message.toUpperCase();
-  var regex = /\b90{3}\b/;
-  var regex2 = /\b(OVER NINE THOUS)(A+)(ND)(?:!+)?/;
+  var regex = /([0-9]+)/;
 
-  if (message.match(regex) || message.match(regex2)) {
-    bot.sendMessage({
-      to:channelID,
-      message: "WHAT?! NINE THOUSAND?!"
-  });
+    var received = message.split(" ");
+    var match = false;
 
+    for (var i = 0; i < received.length; i++) {
+      if (received[i].match(regex)) {
+        if (parseInt(received[i]) > 9000) {
+          match = true;
+        }
+      }
+    }
+
+    if (match) {
+      bot.sendMessage({
+        to:channelID,
+        message: "ITS OVER NINE THOUSAAAAAAND!!!"
+    });
   }
+
 });
